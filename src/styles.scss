@@ -1,0 +1,140 @@
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.popover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .5);
+  border: 1px solid rgba(0, 0, 0, .2);
+  background-clip: padding-box;
+  background-color: #fff;
+  border-radius: 3px;
+  width: 340px;
+  padding: 12px;
+  box-sizing: border-box;
+  &__progress {
+    padding: 0 20px;
+    text-align: center;
+  }
+  & .social-profile__soc-icon {
+    vertical-align: initial;
+  }
+  &::before {
+    display: table;
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    top: -4px;
+    left: -1px;
+  }
+}
+
+.popover-content {
+  padding: 0
+}
+
+.social-description {
+    margin-top: 16px;
+    font-size: 10px;
+    color: gray;
+}
+
+.social-profile {
+  user-select: none;
+
+  &__soc-name,
+  &__comp-name {
+    user-select: text;
+    word-break: break-all;
+  }
+  .list-unstyled {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  &__photo {
+    max-height: 70px;
+    max-width: 70px;
+    float: left;
+    border-radius: 2px;
+    animation: fadein 1s;
+  }
+  &__item {
+    min-height: 50px;
+    margin-bottom: 10px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    &:last-of-type .social-profile__info {
+      margin-bottom: 0;
+    }
+  }
+  &__info {
+    margin-left: 80px;
+    min-height: 70px;
+    margin-bottom: 20px;
+  }
+  &__soc-link {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: none;
+      color: #ff4e00;
+    }
+  }
+  &__soc-name {
+    text-decoration: underline;
+  }
+  &__soc-link,
+  &__comp {
+    line-height: 16px;
+  }
+  &__comp {
+    margin-bottom: 0;
+
+    & p {
+      margin-bottom: 10px;
+    }
+
+    & p:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  &__icon,
+  &__soc-icon {
+    width: 16px;
+  }
+  &__soc-icon {
+    position: relative;
+    left: -1px;
+  }
+  &__icon.fa {
+    font-size: 15px;
+  }
+}
+
+.social-icons {
+  user-select: none;
+  display: inline-block;
+  img {
+    animation: fadein 1s;
+  }
+  &.pointer:hover {
+    cursor: pointer;
+  }
+  & + .js-social-icons-inited {
+    margin-left: 5px;
+  }
+  &.pull-right + .js-social-icons-inited {
+    margin-left: 0;
+  }
+}

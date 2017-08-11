@@ -1,0 +1,35 @@
+{
+  "name": "social-utils",
+  "version": "1.0.82",
+  "description": "",
+  "author": "Integrum",
+  "main": "release/index.min.js",
+  "publishConfig": {
+    "registry": "http://tfsbs:4873"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch",
+    "patch & publish": "npm run build && publish.bat"
+  },
+  "devDependencies": {
+    "@types/jquery": "^2.0.41",
+    "@types/node": "^7.0.12",
+    "awesome-typescript-loader": "^3.1.2",
+    "body-parser": "^1.17.1",
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.0",
+    "express": "^4.15.2",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "node-sass": "^4.5.2",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.3",
+    "template-string-loader": "0.0.3",
+    "typescript": "^2.2.2",
+    "webpack": "^2.3.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.3",
+    "lodash": "latest"
+  }
+}

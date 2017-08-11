@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social utils test page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="tooltip.js"></script>
+    <script src="popover.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html{
+            overflow-y: scroll;
+        }
+        .social-icon {
+            height: 27px;
+            width: 27px;
+            overflow: hidden;
+            display: inline-block;
+            box-sizing: border-box;
+            border: 1px solid #3479cd;
+            color: #3479cd;
+            font-size: 16px;
+            border-radius: 50%;
+            transition: all 300ms;
+        }
+
+        .social-icon .fa {
+            width: 24px;
+            text-align: center;
+            line-height: 27px;
+        }
+
+        .social-icon:hover {
+            transition: all 300ms;
+            cursor: pointer;
+            border-color: #ff9642;
+            color: #ff9642;
+        }
+
+        .social-icon-source {
+            border-bottom: 1px dashed;
+            margin-right: 6px;
+            display: inline-block;
+        }
+
+        .social-icon-source:hover {
+            text-decoration: none;
+            cursor: pointer;
+
+        }
+
+        li {
+            margin-bottom: 8px
+        }
+
+        .table-cell {
+            border: 1px solid #eee;
+            width: 300px;
+            height: 40px;
+            padding: 8px;
+        }
+
+        .icons-right {
+            float: right;
+        }
+
+        .icons-left {
+            margin-right: 6px;
+        }
+    </style>
+
+
+    <script>
+        const testDataNull = JSON.stringify(
+            {
+                "profiles": [
+                    {
+                        "strict"         : true,
+                        "firstName"      : "Наталья",
+                        "lastName"       : "Петрова",
+                        "similarityCount": 1,
+                        "similarityIndex": 0.33217920470045115,
+                        "photo"          : "https://pp.userapi.com/c626420/v626420280/42fd3/mY5qzLrELDA.jpg",
+                        "photoPreview"   : "https://pp.userapi.com/c626420/v626420280/42fd5/NySRDOKCDbI.jpg",
+                        "profileLink"    : "https://vk.com/k.bvrfk.bvjdf",
+                        "city"           : "Санкт-Петербург",
+                        "socialKey"      : "vk",
+                        "socialName"     : "vk.com",
+                        "work"           : "Work"
+                    }
+                ],
+                "orgid": 404,
+                "icons": ["vk"]
+            }
+        );
+
+        $(function () {
+            let selectors = $('.js-social-icon').toArray();
+            id = 100;
+            selectors.forEach(function (selector, i) {
+                $(selector).attr('data-options', JSON.stringify({orgid: id + i}));
+            });
+
+            $('.js-social-icons.id200').attr('data-options', JSON.stringify({orgid: 200, icons: ['vk', 'fb', 'li', 'tw', 'in']}));
+            $('.js-social-icons.id201').attr('data-options', JSON.stringify({orgid: 201, icons: ['vk', 'vk']}));
+            $('.js-social-icons.id202').attr('data-options', JSON.stringify({orgid: 202, icons: ['vk', 'fb']}));
+            $('.js-social-icons.id404').attr('data-options', testDataNull);
+            $('.js-social-icons.id203').attr('data-options', JSON.stringify({orgid: 203, icons: ['li', 'tw', 'in']}));
+            $('.js-social-icons.id204').attr('data-options', JSON.stringify({orgid: 204, icons: ['li'], popover: false}));
+            $('.js-social-icons.id304').attr('data-options', JSON.stringify({orgid: 304, icons: ['vk'], position: 'left'}));
+        })
+
+
+    </script>
+    <script>
+        $(function () {
+            let popover1 = SocialUtils.Popover();
+            popover1.init('.js-hook1', {
+                url: "/api/profiles",
+                triggerEvent: 'click'
+            });
+            let popover2 = SocialUtils.Popover();
+            popover2.init('.js-hook2', {
+                url: "/api/profiles",
+                triggerEvent: 'hover'
+            });
+            SocialUtils.icons('.js-social-icons', {
+//                url: "/api/profiles",
+                url: "https://orgwebapi.integrum.ru/api/social/ByOrgId/id",
+                iconPath: 'https://integrum.ru/Assets/img/social/small/',
+                iconExt: 'png',
+                position: 'right',
+                popover: true,
+                triggerEvent: 'hover'
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h2>Проверка работы попапа для социальных сетей</h2>
+        <p>Для проверки нажать на кнопку соцсети, должен появиться попап</p>
+        <p>Вконтакте отвечает быстро, Фейсбук немного тормозит</p>
+
+        <a class="social-icon js-social-icon js-hook1" data-toggle="popover">
+            <i class="fa fa-vk" data-toggle="popover"></i>
+        </a>
+
+        <a class="social-icon js-social-icon js-hook2" data-toggle="popover">
+            <i class="fa fa-facebook" data-toggle="popover"></i>
+        </a>
+        <hr>
+    </div>
+    <div class="row">
+        <h2>Проверка работы иконок для социальных сетей</h2>
+        <p>Окло фамилии должны быть иконки соцсетей, при нажатии иногда появляется попап</p>
+        <ol>
+            <li>
+                <p>Ошибка на сервере</p>
+                <a class="social-icon-source js-social-icons id200">Ковыряйло Семен Семенович</a>
+            </li>
+            <li>
+                <p>Одна иконка</p>
+                <a class="social-icon-source js-social-icons id201">Мистер Жопосранчик</a>
+            </li>
+            <li>
+                <p>Две иконки</p>
+                <a class="social-icon-source js-social-icons id202">Вялая Жена Сантехника</a>
+            </li>
+            <li>
+                <p>Чел с JSON в data-options без вызова API</p>
+                <a class="social-icon-source js-social-icons id404">Data Options Man</a>
+            </li>
+            <li>
+                <p>Ячейка похожая на таблицу</p>
+            </li>
+            <li class="table-cell">
+                <a style="align-self: center;" class="social-icon-source js-social-icons id203">Пустой Семен Семенович</a>
+            </li>
+            <li>
+                <p>Иконки без попапа</p>
+                <a class="social-icon-source js-social-icons id204">Иконки Только Ивсего</a>
+            </li>
+            <li>
+                <p>Расположение иконок слева от ФИО</p>
+                <a class="social-icon-source js-social-icons id304">Челс Левой Иконкой</a>
+            </li>
+            <li>
+                <p>Нет иконок</p>
+                <a class="social-icon-source js-social-icons">Безыконочный Лев Кошкович</a>
+            </li>
+            <li>
+                <p>Иконки внутри элемента</p>
+            </li>
+            <li class="table-cell">
+                <span class="js-social-icons id206"></span>
+            </li>
+        </ol>
+    </div>
+</div>
+</body>
+</html>
